@@ -36,13 +36,11 @@ app.get("/movies/", async (request, response) => {
     FROM 
     movie;`;
   const movieArray = await db.all(getMovieQuery);
-  /*const ans = (dbObject) => {
-    return {
-      movieName: dbObject.movie_name,
-    };
-  };
-  response.send(movieArray.map((eachMovie) => ans(eachMovie)));*/
-  response.send(moviesArray.map((eachMovie) => ({ movieName: eachMovie.movie_name }))
+  response.send(
+    movieArray.map((eachMovie) => ({ movieName: eachMovie.movie_name }))
+  );
+  //response.send(movieArray.map((eachMovie) => ans(eachMovie)));
+  //response.send(moviesArray.map((eachMovie) => ({ movieName: eachMovie.movie_name }))
 });
 
 //API POST
@@ -148,7 +146,7 @@ app.get("/directors/:directorId/movies/", async (request, response) => {
   const { movieId } = request.params;
   const getDirectorsMovieQuery = `
     SELECT 
-    movie_name
+    *
     FROM 
     movie
     WHERE
@@ -156,3 +154,4 @@ app.get("/directors/:directorId/movies/", async (request, response) => {
   const movieArray = await db.all(getDirectorsMovieQuery);
   response.send(movieArray);
 });
+module.exports = app;
